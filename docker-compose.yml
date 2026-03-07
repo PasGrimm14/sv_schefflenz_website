@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  sv-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sv_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

@@ -2,7 +2,7 @@ import express from 'express';
 import { createDirectus, rest, readItems, readSingleton } from '@directus/sdk';
 
 // 1. Verbindung zu DEINEM neuen Server-CMS
-const directus = createDirectus('http://pasgri-cloud.de:8055/').with(rest());
+const directus = createDirectus('http://cms.svschefflenz.online/').with(rest());
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // Hilfsfunktion für Bild-URLs (Directus Assets)
-const getImg = (id) => id ? `http://pasgri-cloud.de:8055/assets/${id}` : '/images/placeholder.jpg';
+const getImg = (id) => id ? `http://cms.svschefflenz.online/assets/${id}` : '/images/placeholder.jpg';
 
 // --- ROUTEN ---
 
