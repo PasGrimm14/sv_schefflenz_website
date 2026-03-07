@@ -1,0 +1,107 @@
+<%- include('partials/header', { title: title }) %>
+
+<% 
+  const heroBg = (data && data.hero_image) ? getImg(data.hero_image) : '/images/hero-placeholder.jpg';
+%>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('<%= heroBg %>'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= data.headline || 'Senioren' %></h1>
+            <% if (data.season) { %>
+                <p class="lead fs-4 mt-3 badge bg-danger px-4 py-2"><%= data.season %></p>
+            <% } %>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center lead text-muted">
+                    <%- data.intro_text %>
+                </div>
+            </div>
+
+            <% if (data.team_image) { %>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-12">
+                        <figure class="figure w-100 shadow rounded overflow-hidden">
+                            <img src="<%= getImg(data.team_image) %>" class="figure-img img-fluid w-100 mb-0" alt="Senioren Mannschaft">
+                            <% if (data.team_image_caption) { %>
+                                <div class="bg-dark text-white p-3 small text-center">
+                                    <%= data.team_image_caption %>
+                                </div>
+                            <% } %>
+                        </figure>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Unsere Teams im Überblick</h2>
+            </div>
+
+            <div class="row g-5">
+                
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-danger text-white text-center py-3">
+                            <h3 class="h4 fw-bold mb-0"><%= data.team_1_name || '1. Mannschaft' %></h3>
+                            <% if (data.team_1_league) { %>
+                                <small class="d-block mt-1 opacity-75"><%= data.team_1_league %></small>
+                            <% } %>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <% if (data.team_1_widget) { %>
+                                <div class="fupa-container">
+                                    <%- data.team_1_widget %>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted fst-italic">Keine Tabellendaten verfügbar.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-dark text-white text-center py-3">
+                            <h3 class="h4 fw-bold mb-0"><%= data.team_2_name || '2. Mannschaft' %></h3>
+                            <% if (data.team_2_league) { %>
+                                <small class="d-block mt-1 opacity-75"><%= data.team_2_league %></small>
+                            <% } %>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <% if (data.team_2_widget) { %>
+                                <div class="fupa-container">
+                                    <%- data.team_2_widget %>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted fst-italic">Keine Tabellendaten verfügbar.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container text-center">
+            <h3 class="fw-bold mb-4">Interesse an einem Probetraining?</h3>
+            <p class="text-muted mb-4">Wir freuen uns immer über Neuzugänge in beiden Mannschaften.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/kontakt" class="btn btn-outline-dark rounded-pill px-4">Kontakt aufnehmen</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

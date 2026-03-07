@@ -1,0 +1,63 @@
+<%- include('partials/header', { title: title }) %>
+
+<% 
+  // Hintergrundbild Logik (Fallback auf Platzhalter, falls im CMS leer)
+  const heroBg = (data && data.hero_image) ? getImg(data.hero_image) : 'https://placehold.co/1920x600/C8102E/fff?text=Werde+Teil+des+SVS';
+%>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('/images/hero-placeholder.jpg'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= data.hero_title || 'Werde Teil der SVS-Familie!' %></h1>
+            <p class="lead fs-4 mt-3"><%= data.hero_subtitle || 'Werde jetzt Mitglied.' %></p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    
+                    <h2 class="fw-bold"><%= data.intro_headline %></h2>
+                    
+                    <div class="lead mt-3 text-muted">
+                        <%- data.intro_text %>
+                    </div>
+                    
+                    <div class="card shadow-sm my-5">
+                        <div class="card-header">
+                            <h3 class="fw-bold my-2"><%= data.box_title || "So einfach geht's:" %></h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <p class="mb-4"><%= data.box_text %></p>
+                            
+                            <% if (data.preview_image) { %>
+                                <img src="<%= getImg(data.preview_image) %>" class="img-fluid rounded border mb-4" alt="Vorschau Beitrittserklärung">
+                            <% } %>
+                            
+                            <% if (data.file_pdf) { %>
+                                <a href="<%= getImg(data.file_pdf) %>?download" target="_blank" class="btn btn-primary btn-lg px-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-download me-2" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                    Beitrittserklärung herunterladen
+                                </a>
+                            <% } else { %>
+                                <div class="alert alert-warning">
+                                    Das Formular ist aktuell nicht verfügbar. Bitte wenden Sie sich an den Vorstand.
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <p class="text-muted mt-4">Bei Fragen zur Mitgliedschaft stehen wir dir jederzeit gerne zur Verfügung. Sprich uns einfach an oder schreib uns eine E-Mail!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

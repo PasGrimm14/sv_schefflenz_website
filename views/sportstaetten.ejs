@@ -1,0 +1,87 @@
+<%- include('partials/header', { title: title }) %>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('/images/hero-placeholder.jpg'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder">Unsere Sportstätten</h1>
+            <p class="lead fs-4 mt-3">Hier trainieren und spielen wir – die Heimat der SV Schefflenz.</p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            
+            <% if (venues && venues.length > 0) { %>
+                <% venues.forEach((venue, index) => { 
+                    // Prüfen, ob Layout gedreht werden soll (Jeder 2. Eintrag)
+                    const isEven = (index % 2 === 0);
+                %>
+                
+                <div class="row g-5 align-items-center mb-5">
+                    
+                    <div class="col-lg-7 <%= isEven ? '' : 'order-lg-2' %>">
+                        <h2 class="fw-bold"><%= venue.name %></h2>
+                        
+                        <% if (venue.subtitle) { %>
+                            <p class="text-muted"><%= venue.subtitle %></p>
+                        <% } %>
+                        
+                        <% if (venue.address) { %>
+                            <p><strong>Adresse:</strong><br><%- venue.address.replace(/\n/g, '<br>') %></p>
+                        <% } %>
+                        
+                        <div class="description-text">
+                            <%- venue.description %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 <%= isEven ? '' : 'order-lg-1' %>">
+                        
+                        <% if (venue.images && venue.images.length > 1) { %>
+                            <div id="carousel-<%= venue.id %>" class="carousel slide shadow-sm rounded overflow-hidden" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <% venue.images.forEach((imgObj, i) => { %>
+                                        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                            <img src="<%= getImg(imgObj.directus_files_id) %>" class="d-block w-100" alt="<%= venue.name %>">
+                                        </div>
+                                    <% }); %>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= venue.id %>" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= venue.id %>" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
+                        <% } else if (venue.images && venue.images.length === 1) { %>
+                            <figure class="figure w-100">
+                                <img src="<%= getImg(venue.images[0].directus_files_id) %>" class="figure-img img-fluid rounded shadow-sm w-100" alt="<%= venue.name %>">
+                                <figcaption class="figure-caption text-center"><%= venue.name %></figcaption>
+                            </figure>
+
+                        <% } else { %>
+                            <div class="bg-light rounded p-5 text-center text-muted">Kein Bild vorhanden</div>
+                        <% } %>
+
+                    </div>
+                </div>
+
+                <% if (index < venues.length - 1) { %>
+                    <hr class="my-5 opacity-25">
+                <% } %>
+
+                <% }); %>
+            <% } else { %>
+                <p class="text-center text-muted">Keine Sportstätten eingetragen.</p>
+            <% } %>
+
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

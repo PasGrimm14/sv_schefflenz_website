@@ -1,0 +1,78 @@
+/* Custom styles and font settings */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f8f9fa;
+}
+.hero-bg {
+  background-color: black;
+  background-size: cover;
+  background-position: center;
+  height: 25vh;
+}
+.club-color-bg {
+  background-color: #c8102e; /* Main club color */
+  border-color: #c8102e;
+}
+.club-color-bg:hover {
+  background-color: #a80d26; /* Darker red on hover */
+  border-color: #a80d26;
+}
+.club-color-text {
+  color: #c8102e;
+}
+a.nav-link:hover,
+.dropdown-item:hover {
+  color: #c8102e !important;
+}
+.news-card-img {
+  height: 200px;
+  object-fit: cover;
+}
+.news-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+/* Custom CSS for hover dropdown */
+@media (min-width: 992px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+}
+.dropdown-menu {
+  border-radius: 0.5rem;
+  border: 1px solid #eee;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Styling für Rechtstexte (Impressum/Datenschutz) */
+.legal-content {
+  font-family: 'Inter', sans-serif; /* Deine Standardschrift */
+  color: #333;
+  line-height: 1.6; /* Bessere Lesbarkeit */
+}
+
+/* Überschriften innerhalb des CMS-Textes */
+.legal-content h1, 
+.legal-content h2, 
+.legal-content h3, 
+.legal-content h4 {
+  margin-top: 2rem;    /* Abstand nach oben */
+  margin-bottom: 1rem; /* Abstand nach unten */
+  font-weight: 700;
+  color: #000;
+}
+
+/* Absätze */
+.legal-content p {
+  margin-bottom: 1.5rem; /* Luft zwischen Absätzen */
+}
+
+/* Links im Fließtext */
+.legal-content a {
+  color: #c8102e; /* Deine Vereinsfarbe */
+  text-decoration: underline;
+}

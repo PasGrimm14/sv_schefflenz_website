@@ -1,0 +1,29 @@
+<%- include('partials/header', { title: title }) %>
+
+<main>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                
+                <h1 class="fw-bold mb-4">
+                    <%= (data && data.headline) ? data.headline : 'Datenschutzerklärung' %>
+                </h1>
+                
+                <% if (data && data.subline) { %>
+                    <p class="text-muted"><%= data.subline %></p>
+                <% } %>
+
+                <div class="mt-5 legal-content">
+                    <% if (data && data.content) { %>
+                        <%- data.content %>
+                    <% } else { %>
+                        <p>Inhalt wird geladen...</p>
+                    <% } %>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

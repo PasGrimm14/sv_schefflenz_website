@@ -1,0 +1,57 @@
+<%- include('partials/header', { title: title }) %>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('/images/hero-placeholder.jpg');">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= (data && data.hero_title) ? data.hero_title : 'Impressum' %></h1>
+        </div>
+    </section>
+
+    <section class="py-5" id="impressum">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+
+            <h2 class="mb-4">Angaben gemäß § 5 TMG</h2>
+
+            <div class="mb-4">
+                <% if (data && data.adress_block) { %>
+                    <%- data.adress_block %>
+                <% } else { %>
+                    <p>Adresse wird geladen...</p>
+                <% } %>
+            </div>
+
+            <p class="mb-5">
+              <strong>Kontaktaufnahme:</strong><br>
+              
+              <% if (data && data.phone) { %>
+                  Telefon: <%= data.phone %><br>
+              <% } %>
+              
+              <% if (data && data.email) { %>
+                  E-Mail: <a href="mailto:<%= data.email %>"><%= data.email %></a>
+              <% } %>
+            </p>
+
+            <hr class="my-5 opacity-25">
+
+            <div class="legal-content">
+                <% if (data && data.legal_text) { %>
+                    <%- data.legal_text %>
+                <% } %>
+            </div>
+
+            <p class="mt-5 text-muted small">
+              Dieses Impressum wurde freundlicherweise von jurarat.de zur Verfügung gestellt.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

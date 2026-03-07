@@ -1,0 +1,67 @@
+<%- include('partials/header', { title: title }) %>
+
+<% 
+  // Hintergrundbild Logik
+  const heroBg = (data && data.hero_image) ? getImg(data.hero_image) : '/images/hero-placeholder.jpg';
+%>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('<%= heroBg %>'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= data.headline || 'Volleyball' %></h1>
+            <% if (data.intro_text) { %>
+                <p class="lead fs-4 mt-3"><%= data.intro_text %></p>
+            <% } %>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+
+                    <% if (data.block_1_text) { %>
+                        <div class="mb-4">
+                            <%- data.block_1_text %>
+                        </div>
+                    <% } %>
+
+                    <% if (data.image_1) { %>
+                        <figure class="figure my-4 w-100">
+                            <img src="<%= getImg(data.image_1) %>" class="figure-img img-fluid rounded shadow-sm w-100" alt="Volleyball Bild 1">
+                            <% if (data.image_1_caption) { %>
+                                <figcaption class="figure-caption text-center"><%= data.image_1_caption %></figcaption>
+                            <% } %>
+                        </figure>
+                    <% } %>
+
+                    <% if (data.block_2_text) { %>
+                        <div class="mb-4">
+                            <%- data.block_2_text %>
+                        </div>
+                    <% } %>
+
+                    <% if (data.image_2) { %>
+                        <figure class="figure my-4 w-100">
+                            <img src="<%= getImg(data.image_2) %>" class="figure-img img-fluid rounded shadow-sm w-100" alt="Volleyball Bild 2">
+                            <% if (data.image_2_caption) { %>
+                                <figcaption class="figure-caption text-center"><%= data.image_2_caption %></figcaption>
+                            <% } %>
+                        </figure>
+                    <% } %>
+
+                    <% if (data.block_3_text) { %>
+                        <div class="mb-4">
+                            <%- data.block_3_text %>
+                        </div>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

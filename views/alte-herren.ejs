@@ -1,0 +1,147 @@
+<%- include('partials/header', { title: title }) %>
+
+<% 
+  // Hintergrundbild Logik
+  const heroBg = (data && data.hero_image) ? getImg(data.hero_image) : '/images/hero-placeholder.jpg';
+%>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('<%= heroBg %>'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= data.headline || 'Alte Herren' %></h1>
+            <p class="lead fs-4 mt-3"><%= data.subline || 'Leidenschaft kennt kein Alter' %></p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="fw-bold mb-4">Mehr als nur Fußball</h2>
+                    <div class="lead text-muted">
+                        <% if (data.intro_text) { %>
+                            <%- data.intro_text %>
+                        <% } else { %>
+                            <p>Bei uns steht der Spaß am Spiel im Vordergrund. Wir sind eine bunte Truppe aus ehemaligen Aktiven und Hobbykickern, die auch im "besten Alter" den Ball noch nicht ruhen lassen wollen.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <% if (data.team_image) { %>
+                <figure class="figure w-100 mb-5">
+                    <img src="<%= getImg(data.team_image) %>" class="figure-img img-fluid rounded shadow w-100" alt="Alte Herren Mannschaft">
+                    <% if (data.team_image_caption) { %>
+                        <figcaption class="figure-caption text-center mt-2"><%= data.team_image_caption %></figcaption>
+                    <% } %>
+                </figure>
+            <% } %>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Training & Termine</h2>
+                <p class="text-muted">Hier wird geschwitzt – und danach gelacht</p>
+            </div>
+
+            <div class="row g-4 align-items-stretch">
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="ph-fill ph-sun text-warning" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Im Sommer</h4>
+                        <div class="text-muted">
+                            <% if (data.training_summer_info) { %>
+                                <%- data.training_summer_info.replace(/\n/g, '<br>') %>
+                            <% } else { %>
+                                <p><strong>Mittwochs</strong><br>Sportplatz</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="ph-fill ph-snowflake text-info" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Im Winter</h4>
+                        <div class="text-muted">
+                            <% if (data.training_winter_info) { %>
+                                <%- data.training_winter_info.replace(/\n/g, '<br>') %>
+                            <% } else { %>
+                                <p><strong>Samstags</strong><br>Sporthalle</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4 bg-white">
+                        <div class="mb-3">
+                            <i class="ph-fill ph-beer-bottle text-danger" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Die 3. Halbzeit</h4>
+                        <div class="text-muted">
+                            <% if (data.social_text) { %>
+                                <p><%= data.social_text %></p>
+                            <% } else { %>
+                                <p>Nach dem Training sitzen wir gemütlich bei Essen und Trinken zusammen. Das gehört einfach dazu!</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card bg-dark text-white border-0 shadow rounded-4 overflow-hidden">
+                        <div class="row g-0 align-items-center">
+                            
+                            <% if (data.contact_image) { %>
+                                <div class="col-md-4">
+                                    <img src="<%= getImg(data.contact_image) %>" class="img-fluid h-100 w-100 object-fit-cover" style="min-height: 250px;" alt="AH Leiter">
+                                </div>
+                            <% } %>
+
+                            <div class="col-md-<%= data.contact_image ? '8' : '12' %>">
+                                <div class="card-body p-5">
+                                    <h3 class="fw-bold mb-4">Lust bekommen mitzukicken?</h3>
+                                    <p class="mb-4 text-white-50">Egal ob ehemaliger Profi oder Neueinsteiger – bei uns ist jeder willkommen, der Spaß am Fußball und an guter Gesellschaft hat.</p>
+                                    
+                                    <div class="d-flex flex-column gap-2">
+                                        <% if (data.contact_name) { %>
+                                            <div class="fw-bold fs-5"><i class="ph-fill ph-user me-2"></i> <%= data.contact_name %></div>
+                                        <% } %>
+                                        
+                                        <% if (data.contact_phone) { %>
+                                            <div><a href="tel:<%= data.contact_phone %>" class="text-white text-decoration-none"><i class="ph-fill ph-phone me-2"></i> <%= data.contact_phone %></a></div>
+                                        <% } %>
+
+                                        <% if (data.contact_email) { %>
+                                            <div><a href="mailto:<%= data.contact_email %>" class="text-white text-decoration-none"><i class="ph-fill ph-envelope me-2"></i> <%= data.contact_email %></a></div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

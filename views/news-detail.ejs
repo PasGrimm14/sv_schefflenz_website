@@ -1,0 +1,39 @@
+<%- include('partials/header', { title: article.headline + ' - SV Schefflenz' }) %>
+
+<main>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                
+                <h1 class="fw-bold mb-3"><%= article.headline %></h1>
+                
+                <% if(article.teaser) { %>
+                    <p class="lead text-muted mb-4"><%= article.teaser %></p>
+                <% } %>
+
+                <% if(article.image) { %>
+                    <figure class="figure mb-4 w-100">
+                        <img src="<%= getImg(article.image) %>" class="figure-img img-fluid rounded shadow-sm w-100" alt="<%= article.headline %>">
+                        <% if(article.image_caption) { %>
+                            <figcaption class="figure-caption text-center mt-2"><%= article.image_caption %></figcaption>
+                        <% } %>
+                    </figure>
+                <% } %>
+
+                <div class="article-content mb-5">
+                    <%- article.content %>
+                </div>
+
+                <div class="mt-5 pt-4 border-top d-flex justify-content-between align-items-center">
+                    <div class="text-muted">
+                        Veröffentlicht am <%= new Date(article.date_posted).toLocaleDateString('de-DE') %>
+                    </div>
+                    <a href="/news" class="btn btn-outline-secondary btn-sm">&larr; Zurück zur Übersicht</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

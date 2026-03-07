@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: 'News Archiv - SV Schefflenz' }) %>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('/images/hero-placeholder.jpg')">
+      <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+      <div class="position-relative px-3">
+        <h1 class="display-3 fw-bolder">News Archiv</h1>
+        <p class="lead fs-4 mt-3">Beiträge, die älter als 12 Monate sind</p>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        
+        <div class="mb-4">
+            <a href="/news" class="btn btn-outline-secondary btn-sm">&larr; Zu den aktuellen News</a>
+        </div>
+
+        <div class="row g-4">
+            <% if (news && news.length > 0) { %>
+                <% news.forEach(item => { %>
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100">
+                      <img src="<%= getImg(item.image) %>" class="card-img-top" style="height: 300px; object-fit: cover" alt="<%= item.headline %>" />
+                      
+                      <div class="card-body d-flex flex-column">
+                        <p class="card-text text-muted small mb-2">
+                           <%= new Date(item.date_posted).toLocaleDateString('de-DE') %>
+                        </p>
+                        <h3 class="card-title h5 fw-bold mb-3"><%= item.headline %></h3>
+                        <p class="card-text text-muted mb-4 line-clamp-3"><%= item.teaser %></p>
+                        
+                        <a href="/news/<%= item.slug %>" class="fw-semibold club-color-text text-decoration-none mt-auto">Beitrag lesen &rarr;</a>
+                      </div>
+                    </div>
+                  </div>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center py-5 col-12">
+                    <div class="p-5 bg-light rounded-3">
+                        <h3 class="text-muted">Das Archiv ist leer</h3>
+                        <p>Es gibt keine Beiträge, die älter als 12 Monate sind.</p>
+                        <a href="/news" class="btn club-color-bg text-white mt-3">Zu den aktuellen News</a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        
+      </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

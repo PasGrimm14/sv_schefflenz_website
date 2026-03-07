@@ -1,0 +1,82 @@
+<%- include('partials/header', { title: 'Vorstandschaft - SV Schefflenz' }) %>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('/images/hero-placeholder.jpg'); min-height: 350px; background-size: cover; background-position: center;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder">Unsere Vorstandschaft</h1>
+            <p class="lead fs-4 mt-3">Das Team hinter dem Verein</p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            
+            <div class="mb-5">
+                <h2 class="h2 fw-bold text-dark mb-4 text-center section-title">Engere Vorstandschaft</h2>
+                
+                <% if (executive && executive.length > 0) { %>
+                    <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-center">
+                        <% executive.forEach(person => { %>
+                        <div class="col">
+                            <div class="card h-100 shadow-sm text-center border-0">
+                                <img src="<%= getImg(person.image) %>" class="card-img-top rounded-top" 
+                                     style="height: 300px; object-fit: cover;" alt="<%= person.full_name %>">
+                                
+                                <div class="card-body bg-light">
+                                    <h5 class="card-title fw-bold mb-1"><%= person.full_name %></h5>
+                                    <p class="card-text text-primary fw-medium mb-2"><%= person.role %></p>
+                                    
+                                    <% if(person.email) { %>
+                                        <a href="mailto:<%= person.email %>" class="text-decoration-none text-muted small">
+                                            <i class="ph-fill ph-envelope me-1"></i><%= person.email %>
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p class="text-center text-muted">Aktuell keine Einträge vorhanden.</p>
+                <% } %>
+            </div>
+
+            <hr class="my-5 opacity-25">
+
+            <div>
+                <h2 class="h2 fw-bold text-dark mb-4 text-center section-title">Erweiterte Vorstandschaft</h2>
+                
+                <% if (extended && extended.length > 0) { %>
+                    <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-5 justify-content-center">
+                        <% extended.forEach(person => { %>
+                        <div class="col">
+                            <div class="card h-100 shadow-sm text-center border-0">
+                                <img src="<%= getImg(person.image) %>" class="card-img-top rounded-top" 
+                                     style="height: 250px; object-fit: cover;" alt="<%= person.full_name %>">
+                                
+                                <div class="card-body bg-light">
+                                    <h5 class="card-title fw-bold fs-6 mb-1"><%= person.full_name %></h5>
+                                    <p class="card-text text-primary small fw-medium mb-2"><%= person.role %></p>
+                                    
+                                    <% if(person.email) { %>
+                                        <a href="mailto:<%= person.email %>" class="text-decoration-none text-muted small" style="font-size: 0.85rem;">
+                                            <i class="ph-fill ph-envelope me-1"></i>E-Mail
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p class="text-center text-muted">Aktuell keine Einträge vorhanden.</p>
+                <% } %>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

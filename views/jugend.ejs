@@ -1,0 +1,142 @@
+<%- include('partials/header', { title: title }) %>
+
+<% 
+  // 1. Hero Hintergrundbild (Fallback falls leer)
+  const heroBg = (page && page.hero_image) ? getImg(page.hero_image) : '/images/hero-placeholder.jpg';
+%>
+
+<main>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center" 
+             style="background-image: url('<%= heroBg %>'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder"><%= page.headline || 'Unsere Junioren' %></h1>
+            <p class="lead fs-4 mt-3">SVS Juniorenfußball – das Komplettangebot</p>
+        </div>
+    </section>
+
+    <% if (page.intro_text) { %>
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 lead text-muted content-text">
+                    <%- page.intro_text %>
+                </div>
+            </div>
+        </div>
+    </section>
+    <% } %>
+
+    <section class="py-5">
+        <div class="container">
+            
+            <% if (teams && teams.length > 0) { %>
+                <% teams.forEach((team, index) => { %>
+                    
+                    <div id="<%= team.name ? team.name.replace(/\s+/g, '-') : '' %>" class="row g-5 align-items-center mb-5 pb-5 border-bottom">
+                        
+                        <div class="col-lg-6 <%= (index % 2 !== 0) ? 'order-lg-2' : '' %>">
+                            <% if (team.image) { %>
+                                <figure class="figure w-100">
+                                    <img src="<%= getImg(team.image) %>" class="figure-img img-fluid rounded shadow w-100" alt="<%= team.name %>">
+                                    <% if (team.image_caption) { %>
+                                        <figcaption class="figure-caption small fst-italic mt-2 text-center">
+                                            <%= team.image_caption %>
+                                        </figcaption>
+                                    <% } %>
+                                </figure>
+                            <% } %>
+                        </div>
+
+                        <div class="col-lg-6 <%= (index % 2 !== 0) ? 'order-lg-1' : '' %>">
+                            <h2 class="fw-bold mb-3 text-danger"><%= team.name %></h2>
+                            
+                            <div class="card bg-light border-0 mb-4 shadow-sm">
+                                <div class="card-body">
+                                    
+                                    <% if (team.coaches) { %>
+                                        <div class="d-flex align-items-start mb-4 border-bottom pb-3">
+                                            <i class="ph-fill ph-users-three text-danger fs-4 me-3 pt-1"></i>
+                                            <div>
+                                                <strong class="d-block text-dark">Trainer & Betreuer:</strong>
+                                                <span class="text-secondary"><%= team.coaches %></span>
+                                            </div>
+                                        </div>
+                                    <% } %>
+
+                                    <% 
+                                        // Text am Umbruch (\n) teilen und leere Zeilen entfernen
+                                        const times = (team.training_times || '').split('\n').filter(t => t.trim() !== '');
+                                        const locs = (team.location || '').split('\n').filter(l => l.trim() !== '');
+                                        
+                                        // Prüfen: Haben wir mehr als einen Eintrag?
+                                        const count = Math.max(times.length, locs.length);
+                                    %>
+
+                                    <% if (count > 1) { %>
+                                        
+                                        <div class="row g-3">
+                                            <% for(let i = 0; i < count; i++) { %>
+                                                <div class="col-md-6">
+                                                    <% if (times[i]) { %>
+                                                        <div class="d-flex align-items-start mb-2">
+                                                            <i class="ph-fill ph-clock text-danger fs-5 me-2 pt-1"></i>
+                                                            <span class="text-secondary small fw-medium"><%= times[i] %></span>
+                                                        </div>
+                                                    <% } %>
+
+                                                    <% if (locs[i]) { %>
+                                                        <div class="d-flex align-items-start">
+                                                            <i class="ph-fill ph-map-pin text-danger fs-5 me-2 pt-1"></i>
+                                                            <span class="text-secondary small"><%= locs[i] %></span>
+                                                        </div>
+                                                    <% } %>
+                                                </div>
+                                            <% } %>
+                                        </div>
+
+                                    <% } else { %>
+
+                                        <% if (times[0]) { %>
+                                            <div class="d-flex align-items-start mb-3">
+                                                <i class="ph-fill ph-clock text-danger fs-4 me-3 pt-1"></i>
+                                                <div>
+                                                    <strong class="d-block text-dark">Trainingszeiten:</strong>
+                                                    <span class="text-secondary"><%= times[0] %></span>
+                                                </div>
+                                            </div>
+                                        <% } %>
+
+                                        <% if (locs[0]) { %>
+                                            <div class="d-flex align-items-start">
+                                                <i class="ph-fill ph-map-pin text-danger fs-4 me-3 pt-1"></i>
+                                                <div>
+                                                    <strong class="d-block text-dark">Trainingsort:</strong>
+                                                    <span class="text-secondary"><%= locs[0] %></span>
+                                                </div>
+                                            </div>
+                                        <% } %>
+
+                                    <% } %>
+
+                                </div>
+                            </div>
+                            <div class="content-text text-muted">
+                                <%- team.description %>
+                            </div>
+                        </div>
+
+                    </div>
+                <% }); %>
+
+            <% } else { %>
+                <div class="text-center py-5">
+                    <p class="text-muted">Inhalte werden geladen...</p>
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
