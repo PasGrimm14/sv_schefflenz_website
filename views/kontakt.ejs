@@ -101,7 +101,7 @@
                             <% if (globals && globals.address) { %>
                                 <li class="d-flex align-items-start gap-3">
                                     <i class="ph-fill ph-map-pin fs-4 club-color-text flex-shrink-0 mt-1"></i>
-                                    <span class="text-muted"><%- globals.address.replace(/\n/g, '<br>') %></span>
+                                    <span class="text-muted"><%- globals.address.split('\n').join('<br>') %></span>
                                 </li>
                             <% } else { %>
                                 <li class="d-flex align-items-start gap-3">
