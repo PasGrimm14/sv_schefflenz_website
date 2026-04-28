@@ -11,68 +11,64 @@
         </div>
     </section>
 
-    <%-- ===== KONTAKTFORMULAR + ALLGEMEINE INFO ===== --%>
+    <%-- ===== FORMULAR + INFO ===== --%>
     <section class="py-5">
         <div class="container">
             <div class="row g-5 align-items-start">
 
-                <%-- LINKE SPALTE: Formular --%>
+                <%-- Linke Spalte: Formular --%>
                 <div class="col-lg-7">
                     <h2 class="fw-bold mb-1">Nachricht schreiben</h2>
                     <p class="text-muted mb-4">Wir antworten so schnell wie möglich.</p>
 
-                    <% if (locals.success) { %>
+                    <% if (success) { %>
                         <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
                             <i class="ph-fill ph-check-circle fs-4"></i>
                             <span>Deine Nachricht wurde erfolgreich gesendet. Wir melden uns bald!</span>
                         </div>
                     <% } %>
 
-                    <% if (locals.error) { %>
+                    <% if (error) { %>
                         <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
                             <i class="ph-fill ph-warning-circle fs-4"></i>
-                            <span>Beim Senden ist ein Fehler aufgetreten. Bitte versuche es später erneut.</span>
+                            <span>Bitte fülle alle Pflichtfelder aus und stimme dem Datenschutz zu.</span>
                         </div>
                     <% } %>
 
                     <form action="/kontakt" method="POST" novalidate>
-
                         <div class="row g-3">
 
                             <div class="col-sm-6">
                                 <label for="name" class="form-label fw-semibold">Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                       placeholder="Max Mustermann" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Max Mustermann" required>
                             </div>
 
                             <div class="col-sm-6">
                                 <label for="email" class="form-label fw-semibold">E-Mail <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                       placeholder="max@beispiel.de" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="max@beispiel.de" required>
                             </div>
 
                             <div class="col-12">
                                 <label for="betreff" class="form-label fw-semibold">Betreff</label>
                                 <select class="form-select" id="betreff" name="betreff">
                                     <option value="" selected>Bitte wählen…</option>
-                                    <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
-                                    <option value="Mitgliedschaft">Mitgliedschaft</option>
-                                    <option value="Fußball Senioren">Fußball – Senioren</option>
-                                    <option value="Fußball Jugend">Fußball – Jugend</option>
-                                    <option value="Fußball Alte Herren">Fußball – Alte Herren</option>
-                                    <option value="Volleyball">Volleyball</option>
-                                    <option value="Schützen">Schützen</option>
-                                    <option value="Breitensport">Breitensport</option>
-                                    <option value="FSJ">FSJ</option>
-                                    <option value="Sponsoring / Kooperation">Sponsoring / Kooperation</option>
-                                    <option value="Sonstiges">Sonstiges</option>
+                                    <option>Allgemeine Anfrage</option>
+                                    <option>Mitgliedschaft</option>
+                                    <option>Fußball – Senioren</option>
+                                    <option>Fußball – Jugend</option>
+                                    <option>Fußball – Alte Herren</option>
+                                    <option>Volleyball</option>
+                                    <option>Schützen</option>
+                                    <option>Breitensport</option>
+                                    <option>FSJ</option>
+                                    <option>Sponsoring / Kooperation</option>
+                                    <option>Sonstiges</option>
                                 </select>
                             </div>
 
                             <div class="col-12">
                                 <label for="nachricht" class="form-label fw-semibold">Nachricht <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="nachricht" name="nachricht"
-                                          rows="6" placeholder="Deine Nachricht…" required></textarea>
+                                <textarea class="form-control" id="nachricht" name="nachricht" rows="6" placeholder="Deine Nachricht…" required></textarea>
                             </div>
 
                             <div class="col-12">
@@ -95,14 +91,14 @@
                     </form>
                 </div>
 
-                <%-- RECHTE SPALTE: Kurzinfos --%>
+                <%-- Rechte Spalte: Adresse --%>
                 <div class="col-lg-5">
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <h3 class="fw-bold fs-5 mb-4">
                             <i class="ph-fill ph-buildings me-2 club-color-text"></i>SV Schefflenz e.V.
                         </h3>
                         <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
-                            <% if (typeof globals !== 'undefined' && globals.address) { %>
+                            <% if (globals && globals.address) { %>
                                 <li class="d-flex align-items-start gap-3">
                                     <i class="ph-fill ph-map-pin fs-4 club-color-text flex-shrink-0 mt-1"></i>
                                     <span class="text-muted"><%- globals.address.replace(/\n/g, '<br>') %></span>
@@ -110,11 +106,10 @@
                             <% } else { %>
                                 <li class="d-flex align-items-start gap-3">
                                     <i class="ph-fill ph-map-pin fs-4 club-color-text flex-shrink-0 mt-1"></i>
-                                    <span class="text-muted">Musterstraße 1<br>74722 Schefflenz</span>
+                                    <span class="text-muted">74746 Schefflenz</span>
                                 </li>
                             <% } %>
-
-                            <% if (typeof globals !== 'undefined' && globals.email) { %>
+                            <% if (globals && globals.email) { %>
                                 <li class="d-flex align-items-start gap-3">
                                     <i class="ph-fill ph-envelope fs-4 club-color-text flex-shrink-0 mt-1"></i>
                                     <a href="mailto:<%= globals.email %>" class="text-muted text-decoration-none"><%= globals.email %></a>
@@ -146,80 +141,15 @@
                 <p class="text-muted">Direkter Kontakt zu den einzelnen Abteilungen</p>
             </div>
 
-            <% 
-              // Kontakte aus dem CMS oder als Fallback-Array
-              const contacts = (typeof data !== 'undefined' && data && data.contacts && data.contacts.length > 0)
-                ? data.contacts
-                : [
-                    {
-                      department: 'Vorstand',
-                      icon: 'ph-star',
-                      name: (typeof data !== 'undefined' && data && data.vorstand_name) ? data.vorstand_name : '',
-                      role: (typeof data !== 'undefined' && data && data.vorstand_role) ? data.vorstand_role : '1. Vorsitzender',
-                      email: (typeof data !== 'undefined' && data && data.vorstand_email) ? data.vorstand_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.vorstand_phone) ? data.vorstand_phone : '',
-                    },
-                    {
-                      department: 'Fußball Senioren',
-                      icon: 'ph-soccer-ball',
-                      name: (typeof data !== 'undefined' && data && data.senioren_name) ? data.senioren_name : '',
-                      role: (typeof data !== 'undefined' && data && data.senioren_role) ? data.senioren_role : 'Abteilungsleiter Fußball',
-                      email: (typeof data !== 'undefined' && data && data.senioren_email) ? data.senioren_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.senioren_phone) ? data.senioren_phone : '',
-                    },
-                    {
-                      department: 'Fußball Jugend',
-                      icon: 'ph-soccer-ball',
-                      name: (typeof data !== 'undefined' && data && data.jugend_name) ? data.jugend_name : '',
-                      role: (typeof data !== 'undefined' && data && data.jugend_role) ? data.jugend_role : 'Jugendleiter',
-                      email: (typeof data !== 'undefined' && data && data.jugend_email) ? data.jugend_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.jugend_phone) ? data.jugend_phone : '',
-                    },
-                    {
-                      department: 'Schützen',
-                      icon: 'ph-target',
-                      name: (typeof data !== 'undefined' && data && data.schuetzen_name) ? data.schuetzen_name : '',
-                      role: (typeof data !== 'undefined' && data && data.schuetzen_role) ? data.schuetzen_role : 'Oberschützenmeister',
-                      email: (typeof data !== 'undefined' && data && data.schuetzen_email) ? data.schuetzen_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.schuetzen_phone) ? data.schuetzen_phone : '',
-                    },
-                    {
-                      department: 'Volleyball',
-                      icon: 'ph-volleyball',
-                      name: (typeof data !== 'undefined' && data && data.volleyball_name) ? data.volleyball_name : '',
-                      role: (typeof data !== 'undefined' && data && data.volleyball_role) ? data.volleyball_role : 'Abteilungsleiter Volleyball',
-                      email: (typeof data !== 'undefined' && data && data.volleyball_email) ? data.volleyball_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.volleyball_phone) ? data.volleyball_phone : '',
-                    },
-                    {
-                      department: 'Breitensport',
-                      icon: 'ph-person-simple-run',
-                      name: (typeof data !== 'undefined' && data && data.breitensport_name) ? data.breitensport_name : '',
-                      role: (typeof data !== 'undefined' && data && data.breitensport_role) ? data.breitensport_role : 'Abteilungsleiter Breitensport',
-                      email: (typeof data !== 'undefined' && data && data.breitensport_email) ? data.breitensport_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.breitensport_phone) ? data.breitensport_phone : '',
-                    },
-                    {
-                      department: 'FSJ',
-                      icon: 'ph-hand-heart',
-                      name: (typeof data !== 'undefined' && data && data.fsj_name) ? data.fsj_name : '',
-                      role: (typeof data !== 'undefined' && data && data.fsj_role) ? data.fsj_role : 'FSJ-Koordination',
-                      email: (typeof data !== 'undefined' && data && data.fsj_email) ? data.fsj_email : '',
-                      phone: (typeof data !== 'undefined' && data && data.fsj_phone) ? data.fsj_phone : '',
-                    },
-                  ];
-            %>
-
             <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-                <% contacts.forEach(contact => { %>
-                    <% if (contact.name || contact.email || contact.phone) { %>
+                <% contacts.forEach(function(contact) { %>
                     <div class="col">
                         <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
 
                             <div class="d-flex align-items-center gap-3 mb-3">
                                 <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
                                      style="width:48px; height:48px; background-color: rgba(200,16,46,0.1);">
-                                    <i class="ph-fill <%= contact.icon || 'ph-user' %> club-color-text fs-4"></i>
+                                    <i class="ph-fill <%= contact.icon %> club-color-text fs-4"></i>
                                 </div>
                                 <div>
                                     <div class="fw-bold lh-1"><%= contact.department %></div>
@@ -256,7 +186,6 @@
 
                         </div>
                     </div>
-                    <% } %>
                 <% }); %>
             </div>
 
