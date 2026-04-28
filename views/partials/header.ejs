@@ -26,6 +26,11 @@
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#c8102e">
+    <% if (typeof globals !== 'undefined' && globals.favicon) { %>
+        <link rel="icon" href="<%= getImg(globals.favicon.id || globals.favicon) %>" type="image/png">
+    <% } else { %>
+        <link rel="icon" href="/images/favicon.png" type="image/png">
+    <% } %>
   </head>
 
   <body class="d-flex flex-column min-vh-100">
