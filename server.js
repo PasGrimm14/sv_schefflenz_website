@@ -9,6 +9,7 @@ const PORT = 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));d
 
 // Hilfsfunktion für Bild-URLs (Directus Assets)
 const getImg = (id) => id ? `http://cms.svschefflenz.online/assets/${id}` : '/images/placeholder.jpg';
@@ -431,38 +432,39 @@ app.get('/fussball/senioren', async (req, res) => {
 // ─────────────────────────────────────────────
 app.get('/kontakt', async (req, res) => {
   try {
-    // Optional: Kontaktdaten aus dem CMS laden (Singleton "contact_page")
-    // Wenn du die Kollektion noch nicht angelegt hast, gibt es einen leeren Fallback.
-    let data = {};
-    try {
-      data = await directus.request(readSingleton('contact_page')) || {};
-    } catch (_) {
-      // Singleton noch nicht im CMS angelegt – kein Problem, Fallbacks greifen
-    }
+    const contacts = await directus.request(readItems('contacts', {
+      filter: { status: { _eq: 'published' } },
+      sort: ['sort'],
+    }));
  
     res.render('kontakt', {
       title: 'Kontakt – SV Schefflenz',
-      data,
+      contacts: contacts || [],
       success: req.query.success === '1',
       error:   req.query.error   === '1',
     });
   } catch (err) {
     console.error('Fehler Kontaktseite:', err);
-    res.redirect('/');
+    res.render('kontakt', {
+      title: 'Kontakt – SV Schefflenz',
+      contacts: [],
+      success: false,
+      error: false,
+    });
   }
 });
 
 // ─────────────────────────────────────────────
 // KONTAKT – POST (Formular verarbeiten)
 // ─────────────────────────────────────────────
-app.post('/kontakt', async (req, res) => {
+app.post('/kontakt', (req, res) => {
   const { name, email, betreff, nachricht, datenschutz } = req.body;
  
-  // Einfache Pflichtfeld-Prüfung (serverseitig)
   if (!name || !email || !nachricht || !datenschutz) {
     return res.redirect('/kontakt?error=1');
   }
-  console.log(`[Kontaktformular] Von: ${name} <${email}> | Betreff: ${betreff}`);
+ 
+  console.log(`[Kontakt] ${name} <${email}> | ${betreff || '–'}\n${nachricht}`);
   return res.redirect('/kontakt?success=1');
 });
 
