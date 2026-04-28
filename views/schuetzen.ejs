@@ -64,6 +64,53 @@
             </div>
         </div>
     </section>
+
+    <section id="kontakt" class="py-5">
+        <div class="container">
+            <div class="card bg-white border-0 shadow overflow-hidden">
+                <div class="row g-0">
+                    <% if (data.contact_image) { %>
+                        <div class="col-md-4 position-relative">
+                            <img src="<%= getImg(data.contact_image) %>" class="img-fluid h-100 w-100 object-fit-cover" style="min-height: 300px;" alt="Ansprechpartner">
+                        </div>
+                    <% } %>
+                    
+                    <div class="col-md-<%= data.contact_image ? '8' : '12' %> d-flex align-items-center bg-danger text-white">
+                        <div class="card-body p-5">
+                            <h3 class="fw-bold mb-3"><%= data.contact_headline || 'Interesse geweckt?' %></h3>
+                            <p class="fs-5 opacity-75 mb-4">
+                                <%= data.contact_text || 'Wir freuen uns auf neue Interessenten und zukünftige Schützen. Kommt einfach vorbei und traut Euch mal den Schießsport auszuprobieren. Wir geben gerne Schützenhilfe. <br>
+                                Zu Fragen steht unser Oberschützenmeister der Schützenabteilung Jochen Zachow gerne zur Verfügung:' %>
+                            </p>
+                            
+                            <div class="d-flex flex-column gap-3">
+                                <% if (data.contact_person_name) { %>
+                                    <div class="d-flex align-items-center">
+                                        <i class="ph-fill ph-user fs-4 me-3"></i>
+                                        <span class="fs-5 fw-semibold"><%= data.contact_person_name %></span>
+                                    </div>
+                                <% } %>
+
+                                <% if (data.contact_email) { %>
+                                    <div class="d-flex align-items-center">
+                                        <i class="ph-fill ph-envelope fs-4 me-3"></i>
+                                        <a href="mailto:<%= data.contact_email %>" class="text-white text-decoration-none fs-5"><%= data.contact_email %></a>
+                                    </div>
+                                <% } %>
+
+                                <% if (data.contact_phone) { %>
+                                    <div class="d-flex align-items-center">
+                                        <i class="ph-fill ph-phone fs-4 me-3"></i>
+                                        <a href="tel:<%= data.contact_phone %>" class="text-white text-decoration-none fs-5"><%= data.contact_phone %></a>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <%- include('partials/footer') %>
