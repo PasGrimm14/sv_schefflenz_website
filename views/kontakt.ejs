@@ -1,0 +1,197 @@
+<%- include('partials/header', { title: title }) %>
+
+<main>
+    <%-- HERO --%>
+    <section class="hero-bg position-relative d-flex align-items-center justify-content-center text-white text-center"
+             style="background-image: url('/images/hero-placeholder.jpg'); background-position: center; background-size: cover;">
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <div class="position-relative px-3">
+            <h1 class="display-3 fw-bolder">Kontakt</h1>
+            <p class="lead fs-4 mt-3">Wir sind für euch da – schreibt uns oder ruft an.</p>
+        </div>
+    </section>
+
+    <%-- FORMULAR + INFO --%>
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-5 align-items-start">
+
+                <%-- Linke Spalte: Formular --%>
+                <div class="col-lg-7">
+                    <h2 class="fw-bold mb-1">Nachricht schreiben</h2>
+                    <p class="text-muted mb-4">Wir antworten so schnell wie möglich.</p>
+
+                    <% if (success) { %>
+                        <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+                            <i class="ph-fill ph-check-circle fs-4"></i>
+                            <span>Deine Nachricht wurde erfolgreich gesendet. Wir melden uns bald!</span>
+                        </div>
+                    <% } %>
+
+                    <% if (error) { %>
+                        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+                            <i class="ph-fill ph-warning-circle fs-4"></i>
+                            <span>Bitte fülle alle Pflichtfelder aus und stimme dem Datenschutz zu.</span>
+                        </div>
+                    <% } %>
+
+                    <form action="/kontakt" method="POST" novalidate>
+                        <div class="row g-3">
+
+                            <div class="col-sm-6">
+                                <label for="name" class="form-label fw-semibold">Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Max Mustermann" required>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="email" class="form-label fw-semibold">E-Mail <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="max@beispiel.de" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="betreff" class="form-label fw-semibold">Betreff</label>
+                                <select class="form-select" id="betreff" name="betreff">
+                                    <option value="" selected>Bitte wählen…</option>
+                                    <option>Allgemeine Anfrage</option>
+                                    <option>Mitgliedschaft</option>
+                                    <option>Fußball – Senioren</option>
+                                    <option>Fußball – Jugend</option>
+                                    <option>Fußball – Alte Herren</option>
+                                    <option>Volleyball</option>
+                                    <option>Schützen</option>
+                                    <option>Breitensport</option>
+                                    <option>FSJ</option>
+                                    <option>Sponsoring / Kooperation</option>
+                                    <option>Sonstiges</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="nachricht" class="form-label fw-semibold">Nachricht <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="nachricht" name="nachricht" rows="6" placeholder="Deine Nachricht…" required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="datenschutz" name="datenschutz" required>
+                                    <label class="form-check-label small" for="datenschutz">
+                                        Ich habe die <a href="/datenschutz" class="club-color-text" target="_blank">Datenschutzerklärung</a>
+                                        gelesen und stimme der Verarbeitung meiner Daten zu. <span class="text-danger">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-2">
+                                <button type="submit" class="btn club-color-bg text-white fw-bold px-5 py-2 rounded-pill">
+                                    <i class="ph-bold ph-paper-plane-tilt me-2"></i>Nachricht senden
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <%-- Rechte Spalte: Adresse --%>
+                <div class="col-lg-5">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h3 class="fw-bold fs-5 mb-4">
+                            <i class="ph-fill ph-buildings me-2 club-color-text"></i>SV Schefflenz e.V.
+                        </h3>
+                        <ul class="list-unstyled mb-0 d-flex flex-column gap-3">
+                            <% if (globals && globals.address) { %>
+                                <li class="d-flex align-items-start gap-3">
+                                    <i class="ph-fill ph-map-pin fs-4 club-color-text flex-shrink-0 mt-1"></i>
+                                    <span class="text-muted"><%- globals.address.split('\n').join('<br>') %></span>
+                                </li>
+                            <% } else { %>
+                                <li class="d-flex align-items-start gap-3">
+                                    <i class="ph-fill ph-map-pin fs-4 club-color-text flex-shrink-0 mt-1"></i>
+                                    <span class="text-muted">74746 Schefflenz</span>
+                                </li>
+                            <% } %>
+                            <% if (globals && globals.email) { %>
+                                <li class="d-flex align-items-start gap-3">
+                                    <i class="ph-fill ph-envelope fs-4 club-color-text flex-shrink-0 mt-1"></i>
+                                    <a href="mailto:<%= globals.email %>" class="text-muted text-decoration-none"><%= globals.email %></a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+
+                    <div class="card border-0 bg-light rounded-4 p-4">
+                        <p class="small text-muted mb-0">
+                            <i class="ph-fill ph-info me-1 club-color-text"></i>
+                            Für spezifische Abteilungsanfragen kannst du auch direkt die
+                            <a href="#abteilungen" class="club-color-text text-decoration-none fw-semibold">Ansprechpartner</a>
+                            weiter unten kontaktieren.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <%-- ANSPRECHPARTNER --%>
+    <section id="abteilungen" class="py-5 bg-light">
+        <div class="container">
+
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Ansprechpartner</h2>
+                <p class="text-muted">Direkter Kontakt zu den einzelnen Abteilungen</p>
+            </div>
+
+            <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+                <% contacts.forEach(function(contact) { %>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                     style="width:48px; height:48px; background-color: rgba(200,16,46,0.1);">
+                                    <i class="ph-fill <%= contact.icon %> club-color-text fs-4"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold lh-1"><%= contact.department %></div>
+                                    <% if (contact.role) { %>
+                                        <div class="text-muted small"><%= contact.role %></div>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <% if (contact.name) { %>
+                                <p class="fw-semibold mb-2"><%= contact.name %></p>
+                            <% } %>
+
+                            <ul class="list-unstyled mb-0 d-flex flex-column gap-2 mt-auto">
+                                <% if (contact.email) { %>
+                                    <li>
+                                        <a href="mailto:<%= contact.email %>"
+                                           class="text-muted text-decoration-none small d-flex align-items-center gap-2">
+                                            <i class="ph-fill ph-envelope club-color-text fs-5 flex-shrink-0"></i>
+                                            <span class="text-truncate"><%= contact.email %></span>
+                                        </a>
+                                    </li>
+                                <% } %>
+                                <% if (contact.phone) { %>
+                                    <li>
+                                        <a href="tel:<%= contact.phone.split(' ').join('') %>"
+                                           class="text-muted text-decoration-none small d-flex align-items-center gap-2">
+                                            <i class="ph-fill ph-phone club-color-text fs-5 flex-shrink-0"></i>
+                                            <span><%= contact.phone %></span>
+                                        </a>
+                                    </li>
+                                <% } %>
+                            </ul>
+
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<%- include('partials/footer') %>
