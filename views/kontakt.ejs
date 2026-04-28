@@ -175,7 +175,7 @@
                                 <% } %>
                                 <% if (contact.phone) { %>
                                     <li>
-                                        <a href="tel:<%= contact.phone.replace(/\s/g,'') %>"
+                                        <a href="tel:<%= contact.phone.split(' ').join('') %>"
                                            class="text-muted text-decoration-none small d-flex align-items-center gap-2">
                                             <i class="ph-fill ph-phone club-color-text fs-5 flex-shrink-0"></i>
                                             <span><%= contact.phone %></span>
