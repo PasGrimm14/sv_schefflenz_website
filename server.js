@@ -9,7 +9,7 @@ const PORT = 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));d
+app.use(express.urlencoded({ extended: true }));
 
 // Hilfsfunktion für Bild-URLs (Directus Assets)
 const getImg = (id) => id ? `http://cms.svschefflenz.online/assets/${id}` : '/images/placeholder.jpg';
