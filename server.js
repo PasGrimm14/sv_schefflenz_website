@@ -1,6 +1,10 @@
 import express from 'express';
 import { createDirectus, rest, readItems, readSingleton } from '@directus/sdk';
 
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
+
 // 1. Verbindung zu DEINEM neuen Server-CMS
 const directus = createDirectus('http://cms.svschefflenz.online/').with(rest());
 
@@ -457,15 +461,37 @@ app.get('/kontakt', async (req, res) => {
 // ─────────────────────────────────────────────
 // KONTAKT – POST (Formular verarbeiten)
 // ─────────────────────────────────────────────
-app.post('/kontakt', (req, res) => {
+app.post('/kontakt', async (req, res) => {
   const { name, email, betreff, nachricht, datenschutz } = req.body;
- 
+
   if (!name || !email || !nachricht || !datenschutz) {
     return res.redirect('/kontakt?error=1');
   }
- 
-  console.log(`[Kontakt] ${name} <${email}> | ${betreff || '–'}\n${nachricht}`);
-  return res.redirect('/kontakt?success=1');
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT),
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"${name}" <${process.env.SMTP_USER}>`,
+      replyTo: email,
+      to: process.env.CONTACT_MAIL,
+      subject: `Kontaktformular: ${betreff || 'Neue Nachricht'}`,
+      text: `Name: ${name}\nE-Mail: ${email}\nBetreff: ${betreff}\n\n${nachricht}`,
+    });
+
+    return res.redirect('/kontakt?success=1');
+  } catch (err) {
+    console.error('Mailer-Fehler:', err);
+    return res.redirect('/kontakt?error=1');
+  }
 });
 
 
