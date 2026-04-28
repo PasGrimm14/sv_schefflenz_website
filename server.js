@@ -24,7 +24,7 @@ app.use(async (req, res, next) => {
     const globals = await directus.request(readSingleton('globals'));
     
     // Speichere sie in res.locals -> Damit sind sie in ALLEN EJS-Dateien (auch footer) verfügbar
-    res.locals.globals = globals;
+    res.locals.globals = Array.isArray(globals) ? globals[0] : globals;
   } catch (err) {
     console.error("Konnte Globals nicht laden:", err);
     // Fallback, falls Directus nicht erreichbar ist
