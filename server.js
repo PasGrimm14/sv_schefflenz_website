@@ -426,6 +426,47 @@ app.get('/fussball/senioren', async (req, res) => {
   }
 });
 
+// ─────────────────────────────────────────────
+// KONTAKT – GET (Seite anzeigen)
+// ─────────────────────────────────────────────
+app.get('/kontakt', async (req, res) => {
+  try {
+    // Optional: Kontaktdaten aus dem CMS laden (Singleton "contact_page")
+    // Wenn du die Kollektion noch nicht angelegt hast, gibt es einen leeren Fallback.
+    let data = {};
+    try {
+      data = await directus.request(readSingleton('contact_page')) || {};
+    } catch (_) {
+      // Singleton noch nicht im CMS angelegt – kein Problem, Fallbacks greifen
+    }
+ 
+    res.render('kontakt', {
+      title: 'Kontakt – SV Schefflenz',
+      data,
+      success: req.query.success === '1',
+      error:   req.query.error   === '1',
+    });
+  } catch (err) {
+    console.error('Fehler Kontaktseite:', err);
+    res.redirect('/');
+  }
+});
+
+// ─────────────────────────────────────────────
+// KONTAKT – POST (Formular verarbeiten)
+// ─────────────────────────────────────────────
+app.post('/kontakt', async (req, res) => {
+  const { name, email, betreff, nachricht, datenschutz } = req.body;
+ 
+  // Einfache Pflichtfeld-Prüfung (serverseitig)
+  if (!name || !email || !nachricht || !datenschutz) {
+    return res.redirect('/kontakt?error=1');
+  }
+  console.log(`[Kontaktformular] Von: ${name} <${email}> | Betreff: ${betreff}`);
+  return res.redirect('/kontakt?success=1');
+});
+
+
 // --- SERVER STARTEN ---
 app.listen(PORT, () => {
   console.log(`Frontend läuft lokal auf http://localhost:${PORT}`);
