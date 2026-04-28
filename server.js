@@ -433,7 +433,7 @@ app.get('/fussball/senioren', async (req, res) => {
 app.get('/kontakt', async (req, res) => {
   try {
     const contacts = await directus.request(readItems('contacts', {
-      filter: { status: { _eq: 'Published' } },
+      filter: { status: { _eq: 'published' } },
       sort: ['sort'],
     }));
  
